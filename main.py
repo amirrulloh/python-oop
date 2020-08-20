@@ -1,28 +1,55 @@
 class Hero:
     
-    def __init__(self, inputName, inputHealth, inputPower, inputArmor):
-        self.name = inputName
-        self.health = inputHealth
-        self.power = inputPower
-        self.armor = inputArmor
+    #Private class variabel
+    __jumlah = 0
 
-    #void
-    def siapa(self):
-        print(f"namaku {self.name}")
+    def __init__(self, name, healt, attPower, armor):
+        self.__name = name
+        self.__healthStandar = healt
+        self.__attPowerStandar = attPower
+        self.__armorStandar = armor
+        self.__level = 1
+        self.__exp = 0 #Experience
+
+        self.__healthMax = self.__healthStandar * self.__level
+        self.__attPower = self.__attPowerStandar * self.__level
+        self.__armor = self.__armorStandar * self.__level
+
+        self.__health = self.__healthMax
+
+        Hero.__jumlah += 1
     
-    #argumen
-    def healthUp(self, up):
-        self.health += up
+    @property
+    def info(self):
+        return "{} Level {}:\n\t health = {}/{} \n\t attack = {} \n\t armor = {}".format(self.__name, self.__level, self.__health, self.__healthMax, self.__attPower, self.__armor)
     
-    #return
-    def getHealth(self):
-        return self.health
+    @property
+    def gainExp(self):
+        pass
 
-hero1 = Hero("Snipper", 100, 10, 5)
-hero2 = Hero("Mirana", 90, 5 ,6)
+    @gainExp.setter
+    def gainExp(self, addExp):
+        self.__exp += addExp
+        if (self.__exp >= 100):
+            print(self.__name, 'Level Up')
+            self.__level += 1
+            self.__exp -= 100
+
+            self.__healthMax = self.__healthStandar * self.__level
+            self.__attPower = self.__attPowerStandar * self.__level
+            self.__armor = self.__armorStandar * self.__level
+    
+    def attack(self, musuh):
+        self.gainExp = 50
 
 
-hero1.siapa()
-hero1.healthUp(10)
 
-print(hero1.getHealth())
+haya = Hero("Hayabusa", 100, 5, 10)
+siber = Hero("Siber", 100, 5, 10)
+print(haya.info)
+haya.attack(siber)
+haya.attack(siber)
+haya.attack(siber)
+print(haya.info)
+
+   
